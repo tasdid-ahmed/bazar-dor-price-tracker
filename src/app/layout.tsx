@@ -4,6 +4,8 @@ import { Toaster } from "react-hot-toast";
 import SiteShell from "@/components/layout/site-shell";
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
+
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali", "latin"],
   variable: "--font-noto-bengali",
