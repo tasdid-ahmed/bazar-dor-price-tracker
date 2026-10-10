@@ -1,53 +1,43 @@
 
 import { getProducts } from "@/lib/api";
-import { toBn, formatPrice, unitShort } from "@/lib/format";
+import HeroBanner from "@/components/home/hero-banner";
+import ProductSection from "@/components/home/product-section";
 
-export default async function Home() {
-  let products;
+export default async function HomePage() {
+  const products = await getProducts();
 
-  try {
-    products = await getProducts();
-  } catch {
-    return (
-      <main className="mx-auto max-w-4xl p-6">
-        <h1 className="text-2xl font-bold text-red-700">
-          API connection failed
-        </h1>
-        <p className="mt-2">
-          Check the API availability and your terminal for errors.
-        </p>
-      </main>
-    );
-  }
+  const risers = products
+    .filter((product) => product.change.dir === "up")
+    .sort((a, b) => b.change.pct - a.change.pct)
+    .slice(0, 6);
+
+  const fallers = products
+    .filter((product) => product.change.dir === "down")
+    .sort((a, b) => a.change.pct - b.change.pct)
+    .slice(0, 6);
 
   return (
-    <main className="mx-auto max-w-4xl p-6">
-      <h1 className="text-3xl font-bold text-brand">বাজার দর — API পরীক্ষা</h1>
+    <div className="mx-auto w-full max-w-6xl space-y-9 px-4 py-6 sm:space-y-12 sm:py-9">
+      <HeroBanner />
 
-      <p className="mt-2 text-gray-600">
-        মোট {toBn(products.length)}টি পণ্য পাওয়া গেছে।
-      </p>
+      <ProductSection
+        title="▲ আজ দাম বেড়েছে"
+        products={risers}
+        tone="rise"
+      />
 
-      <ul className="mt-6 divide-y divide-gray-200 rounded-xl border border-gray-200">
-        {products.map((product) => (
-          <li key={product.id} className="flex items-center gap-3 p-4">
-            <span className="text-2xl" aria-hidden="true">
-              {product.image}
-            </span>
+      <ProductSection
+        title="▼ আজ দাম কমেছে"
+        products={fallers}
+        tone="fall"
+      />
 
-            <div className="min-w-0 flex-1">
-              <p className="font-semibold">{product.nameBn}</p>
-              <p className="text-sm text-gray-500">
-                {unitShort(product.unit)}
-              </p>
-            </div>
-
-            <p className="shrink-0 font-bold">
-              {formatPrice(product.today)}
-            </p>
-          </li>
-        ))}
-      </ul>
-    </main>
+      <ProductSection
+        id="সব-পণ্য"
+        title="সব পণ্য"
+        subtitle={`মোট ${products.length.toLocaleString("bn-BD")}টি পণ্য দেখানো হচ্ছে`}
+        products={products}
+      />
+    </div>
   );
 }
