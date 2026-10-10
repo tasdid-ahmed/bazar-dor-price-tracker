@@ -1,3 +1,19 @@
-@import "tailwindcss";
-@import "@heroui/styles"; 
+   @import "tailwindcss";
+   @import "@heroui/styles";
 
+   @theme inline {
+       --font-sans: var(--font-noto-bengali), ui-sans-serif, system-ui, sans-serif;
+   }
+
+   @theme {
+       --color-brand: #05893e;
+       --color-paper: #fafcf9;
+       --color-rise: #c0262d;
+       --color-fall: #16803c;
+   }
+
+   :root {
+       --background: #f0f5ef;
+       --accent: #05893e;
+       --accent-foreground: #ffffff;
+   }
