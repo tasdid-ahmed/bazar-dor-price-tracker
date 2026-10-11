@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import {  useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
@@ -25,6 +25,13 @@ function safeNextPath(value: string | null): string {
 
 export default function SignInForm() {
   const searchParams = useSearchParams();
+
+    useEffect(() => {
+    if (searchParams.get("reason") === "login-required") {
+      toast.error("এই পেজ দেখতে আগে সাইন ইন করুন।", { id: "login-required" });
+    }
+  }, [searchParams]);
+
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 

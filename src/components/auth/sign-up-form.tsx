@@ -63,9 +63,11 @@ export default function SignUpForm() {
         return;
       }
 
+      // autoSignIn is on (so duplicate emails are rejected), so end the
+      // temporary session and send the user to the sign-in page.
+      await authClient.signOut();
       toast.success("অ্যাকাউন্ট তৈরি হয়েছে। এখন সাইন ইন করুন।");
-      router.replace("/");
-      router.refresh();
+      router.replace("/sign-in");
     } catch {
       toast.error("একটি সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।");
     } finally {
