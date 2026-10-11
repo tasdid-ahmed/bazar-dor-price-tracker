@@ -15,18 +15,27 @@ export const passwordSchema = z
 
 export const signInSchema = z.object({
   email: emailSchema,
-  password: z.string().min(1, "পাসওয়ার্ড দিতে হবে."),
+  password: z.string().min(1, "পাসওয়ার্ড দিতে হবে।"),
 });
 
-export const signUpSchema = z
-  .object({
-    name: z
-      .string()
-      .trim()
-      .min(2, "নাম কমপক্ষে ২ অক্ষরের হতে হবে।")
-      .max(80, "নাম সর্বোচ্চ ৮০ অক্ষরের হতে পারবে।"),
-  })
-  
+export const signUpSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "নাম কমপক্ষে ২ অক্ষরের হতে হবে।")
+    .max(80, "নাম সর্বোচ্চ ৮০ অক্ষরের হতে পারবে।"),
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+export const updateProfileSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "নাম কমপক্ষে ২ অক্ষরের হতে হবে।")
+    .max(80, "নাম সর্বোচ্চ ৮০ অক্ষরের হতে পারবে।"),
+});
 
 export type SignInValues = z.infer<typeof signInSchema>;
 export type SignUpValues = z.infer<typeof signUpSchema>;
+export type UpdateProfileValues = z.infer<typeof updateProfileSchema>;

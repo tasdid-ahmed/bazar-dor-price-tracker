@@ -17,9 +17,11 @@ export default function UpdateProfileForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     if (loading) return;
 
     const formData = new FormData(event.currentTarget);
+
     const validation = updateProfileSchema.safeParse({
       name: String(formData.get("name") ?? ""),
     });
@@ -64,10 +66,11 @@ export default function UpdateProfileForm({
       <div>
         <label
           htmlFor="profile-name"
-          className="mb-1.5 block text-sm font-semibold text-gray-700"
+          className="mb-2 block text-sm font-medium text-gray-700"
         >
           নাম
         </label>
+
         <input
           id="profile-name"
           name="name"
@@ -78,10 +81,18 @@ export default function UpdateProfileForm({
           required
           aria-invalid={Boolean(error)}
           aria-describedby={error ? "profile-name-error" : undefined}
-          className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-gray-400 focus:border-brand focus:ring-2 focus:ring-green-100"
+          onChange={() => {
+            if (error) setError("");
+          }}
+          className="w-full rounded-lg border border-gray-200 bg-transparent px-3.5 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-brand focus:ring-2 focus:ring-green-100"
         />
+
         {error && (
-          <p id="profile-name-error" className="mt-1 text-xs text-red-600">
+          <p
+            id="profile-name-error"
+            role="alert"
+            className="mt-2 text-xs text-red-600"
+          >
             {error}
           </p>
         )}
@@ -90,7 +101,7 @@ export default function UpdateProfileForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-lg bg-brand px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-green-800 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? "আপডেট হচ্ছে…" : "আপডেট"}
       </button>
