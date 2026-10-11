@@ -60,6 +60,7 @@ export default function SocialAuthButtons() {
       const result = await authClient.signIn.social({
         provider,
         callbackURL: "/",
+        errorCallbackURL: "/sign-in",
       });
 
       if (result.error) {

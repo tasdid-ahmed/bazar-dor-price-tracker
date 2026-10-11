@@ -1,9 +1,8 @@
-
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
-import {  useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 import { signInSchema } from "@/lib/validation";
@@ -23,17 +22,32 @@ function safeNextPath(value: string | null): string {
   }
 }
 
+const SOCIAL_ERRORS: Record<string, string> = {
+  account_not_linked:
+    "এই ইমেইল দিয়ে ইতিমধ্যে ইমেইল-পাসওয়ার্ডে অ্যাকাউন্ট খোলা আছে। সেই পদ্ধতিতেই সাইন ইন করুন।",
+  unable_to_link_account:
+    "অ্যাকাউন্টটি যুক্ত করা যায়নি। পুরোনো ডেটা থাকলে মুছে আবার চেষ্টা করুন।",
+  email_not_found: "আপনার অ্যাকাউন্ট থেকে ইমেইল পাওয়া যায়নি।",
+};
+
 export default function SignInForm() {
   const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-    useEffect(() => {
+  useEffect(() => {
     if (searchParams.get("reason") === "login-required") {
       toast.error("এই পেজ দেখতে আগে সাইন ইন করুন।", { id: "login-required" });
     }
-  }, [searchParams]);
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+    const error = searchParams.get("error");
+    if (error) {
+      toast.error(
+        SOCIAL_ERRORS[error] ?? "সোশ্যাল লগইন করা যায়নি। আবার চেষ্টা করুন।",
+        { id: "social-error" },
+      );
+    }
+  }, [searchParams]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
