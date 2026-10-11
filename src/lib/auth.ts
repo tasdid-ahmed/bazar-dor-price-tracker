@@ -24,10 +24,19 @@ export const auth = betterAuth({
         google: {
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            mapProfileToUser: (profile) => ({
+                image: profile.picture,
+            }),
+            overrideUserInfoOnSignIn: true,
         },
         github: {
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+            mapProfileToUser: (profile) => ({
+                image: profile.avatar_url,
+            }),
+            overrideUserInfoOnSignIn: true,
+
         },
     },
     database: mongodbAdapter(db, {

@@ -18,6 +18,8 @@ export default async function ProfilePage() {
 
   const { user } = session;
 
+  console.log("Profile image URL:", user.image);
+
   const initials =
     user.name
       ?.trim()
