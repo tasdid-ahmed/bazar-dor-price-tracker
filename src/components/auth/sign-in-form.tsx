@@ -3,7 +3,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 import { signInSchema } from "@/lib/validation";
@@ -24,7 +24,6 @@ function safeNextPath(value: string | null): string {
 }
 
 export default function SignInForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -67,8 +66,8 @@ export default function SignInForm() {
       }
 
       toast.success("সফলভাবে সাইন ইন হয়েছে।");
-      router.replace(safeNextPath(searchParams.get("next")));
-      router.refresh();
+      const destination = safeNextPath(searchParams.get("next"));
+      window.location.replace(destination);
     } catch {
       toast.error("সাইন ইন করা যায়নি। আবার চেষ্টা করুন।");
     } finally {
