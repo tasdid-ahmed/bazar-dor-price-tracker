@@ -50,7 +50,7 @@ export default async function ProductDetailPage({
     );
 
     return (
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:py-10">
+        <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:py-10">
             <nav
                 aria-label="ব্রেডক্রাম্ব"
                 className="mb-6 flex flex-wrap items-center gap-2 text-sm text-gray-500"
@@ -76,7 +76,7 @@ export default async function ProductDetailPage({
             <section className="grid gap-6 rounded-3xl border border-gray-200/80 bg-[#fafcf9] p-5 shadow-sm sm:grid-cols-[220px_minmax(0,1fr)] sm:gap-8 sm:p-8">
                 <div className="flex min-h-48 items-center justify-center overflow-hidden rounded-2xl bg-[#f0f5ef] p-4 sm:min-h-56">
                     {product.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
+                    
                         <span
                             role="img"
                             aria-label={product.nameBn}
@@ -222,6 +222,6 @@ export default async function ProductDetailPage({
                 বাজারভেদে দাম পরিবর্তিত হতে পারে। কেনাকাটার আগে সংশ্লিষ্ট বাজারের
                 সর্বশেষ মূল্য যাচাই করুন।
             </p>
-        </main>
+        </div>
     );
 }
