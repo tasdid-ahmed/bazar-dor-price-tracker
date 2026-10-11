@@ -25,14 +25,8 @@ export const signUpSchema = z
       .trim()
       .min(2, "নাম কমপক্ষে ২ অক্ষরের হতে হবে।")
       .max(80, "নাম সর্বোচ্চ ৮০ অক্ষরের হতে পারবে।"),
-    email: emailSchema,
-    password: passwordSchema,
-    confirmPassword: z.string().min(1, "পাসওয়ার্ড আবার লিখুন।"),
   })
-  .refine((values) => values.password === values.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "দুটি পাসওয়ার্ড মিলছে না।",
-  });
+  
 
 export type SignInValues = z.infer<typeof signInSchema>;
 export type SignUpValues = z.infer<typeof signUpSchema>;
